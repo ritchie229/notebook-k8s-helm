@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata :
+  name: notebook
+  labels:
+    env: testing
+    app: notebook
+    owner: RishatMukhtarov
+
+spec:
+  selector:
+    matchLabels:
+      app: notebook
+  template:
+    metadata:
+      labels:
+        app: notebook
+    spec:
+      containers:
+      - name: flask
+        image: ritchie229/ritchie_docker:notebook-app-web
+        ports:
+          - containerPort: 5000
+        env:
+          - name: DB_HOST
+            value: mysql
+          - name: DB_USER
+            value: user
+          - name: DB_PASSWORD
+            value: userpass
+          - name: DB_NAME
+            value: notebook
+
+      - name: mysql
+        image: ritchie229/ritchie_docker:notebook-app-db
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: rootpass
+          - name: MYSQL_DATABASE
+            value: notebook
+          - name: MYSQL_USER
+            value: user
+          - name: MYSQL_PASSWORD
+            value: userpass
+        ports:
+          - containerPort: 3306
+        volumeMounts:
+          - mountPath: /var/lib/mysql
+            name: mysql-storage
+      volumes:
+      - name: mysql-storage
+        persistentVolumeClaim:
+          claimName: mysql-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notebook-service
+spec:
+  selector:
+    app: notebook         #Deploy sevice selects this label
+  ports:
+    - name: flask-listener
+      protocol: TCP
+      port: 5000       #port on Load Balancer
+      targetPort: 5000 #port on POD
+    - name: mysql-listener
+      protocol: TCP
+      port: 3306
+      targetPort: 3306
+  type: LoadBalancer
+#  type: ClusterIP
+#  type: NodePort
+
+
+

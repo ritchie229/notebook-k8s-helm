@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notebook
+spec:
+  replicas: {{ .Values.notebook.replicaCount }}
+  selector:
+    matchLabels:
+      app: notebook
+  template:
+    metadata:
+      labels:
+        app: notebook
+    spec:
+      containers:
+        - name: notebook
+          image: "{{ .Values.notebook.image.repository }}:{{ .Values.notebook.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.notebook.service.port }}
+          env:
+            - name: DB_HOST
+              value: notebook-mysql
+            - name: DB_NAME
+              value: "{{ .Values.mysql.database }}"
+            - name: DB_USER
+              value: "{{ .Values.mysql.user }}"
+            - name: DB_PASSWORD
+              value: "{{ .Values.mysql.password }}"
+

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: notebook-mysql
+spec:
+  selector:
+    app: notebook-mysql
+  ports:
+    - port: {{ .Values.mysql.port }}
+      targetPort: {{ .Values.mysql.port }}
+  type: ClusterIP
+

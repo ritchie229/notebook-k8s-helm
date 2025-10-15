@@ -1,0 +1,25 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: flask-autoscaling
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v2beta1v1
+    kind: Deployment
+    name: flask-app       #must match the Deployment name at the top
+  minReplicas: 3
+  maxReplicas: 6
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 10
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 5
+

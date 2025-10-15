@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-app
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+#        image: mysql:8.0
+#        image: docker.io/library/notebook-app-db:latest
+        image: ritchie229/ritchie_docker:notebook-app-db
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: rootpass
+          - name: MYSQL_DATABASE
+            value: notebook
+          - name: MYSQL_USER
+            value: user
+          - name: MYSQL_PASSWORD
+            value: userpass
+        ports:
+          - containerPort: 3306
+        volumeMounts:
+          - mountPath: /var/lib/mysql
+            name: mysql-storage
+      nodeSelector:
+        type: worker
+      volumes:
+      - name: mysql-storage
+        persistentVolumeClaim:
+          claimName: mysql-pvc
+

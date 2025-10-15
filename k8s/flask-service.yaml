@@ -1,0 +1,15 @@
+# flask-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-service
+spec:
+  selector:
+    app: flask         #Deploy sevice selects this label
+  ports:
+    - protocol: TCP
+      port: 5000       #port on Load Balancer
+      targetPort: 5000 #port on POD
+#  type: NodePort  # или LoadBalancer, если у тебя есть внешний балансировщик
+#  type: LoadBalancer
+  type: ClusterIP   # To make it work with Ingress
