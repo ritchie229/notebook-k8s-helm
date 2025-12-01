@@ -10,9 +10,9 @@ nodes:
             node-labels: "ingress-ready=true"
     extraPortMappings:
       - containerPort: 80
-        hostPort: 8080
+        hostPort: 1080
       - containerPort: 443
-        hostPort: 8443
+        hostPort: 1443
       - containerPort: 31047
         hostPort: 31047
   - role: worker

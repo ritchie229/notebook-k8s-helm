@@ -203,4 +203,6 @@ spec:
               port:
                 number: 5000
 
+### ArgoCD
+kubectl apply -f argocd/notebook-app.yaml
 
