@@ -206,3 +206,13 @@ spec:
 ### ArgoCD
 kubectl apply -f argocd/notebook-app.yaml
 
+or 
+
+argocd app create notebook \
+  --repo https://github.com/ritchie229/notebook-k8s-helm.git \
+  --path notebook-chart \
+  --dest-server https://kubernetes.default.svc \
+  --dest-namespace notebook \
+  --sync-policy automated \
+  --sync-option CreateNamespace=true
+
