@@ -8,5 +8,4 @@ spec:
   ports:
     - port: {{ .Values.notebook.service.port }}
       targetPort: {{ .Values.notebook.service.port }}
-  type: ClusterIP
-
+  type: NodePort
