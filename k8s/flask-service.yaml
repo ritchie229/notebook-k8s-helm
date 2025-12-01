@@ -10,6 +10,6 @@ spec:
     - protocol: TCP
       port: 5000       #port on Load Balancer
       targetPort: 5000 #port on POD
-#  type: NodePort  # или LoadBalancer, если у тебя есть внешний балансировщик
+  type: NodePort  # или LoadBalancer, если у тебя есть внешний балансировщик
 #  type: LoadBalancer
-  type: ClusterIP   # To make it work with Ingress
+#  type: ClusterIP   # To make it work with Ingress

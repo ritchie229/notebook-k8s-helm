@@ -69,9 +69,9 @@ spec:
       protocol: TCP
       port: 3306
       targetPort: 3306
-  type: LoadBalancer
+#  type: LoadBalancer
 #  type: ClusterIP
-#  type: NodePort
+  type: NodePort
 
 
 
